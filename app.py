@@ -12,9 +12,7 @@ intents.presences = False
 
 bot = commands.Bot(command_prefix='!', intents=intents)
 
-bot = commands.Bot(command_prefix='!', intents=intents)
-
-issue_count = 0  # Zähler für Anliegen
+issue_count = 0 
 
 @bot.event
 async def on_ready():
