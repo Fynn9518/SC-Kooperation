@@ -13,7 +13,7 @@ intents.presences = False
 
 bot = commands.Bot(command_prefix='!', intents=intents)
 
-issue_count = 0  # Zähler für Anliegen
+issue_count = 0  
 
 @bot.event
 async def on_ready():
@@ -44,8 +44,8 @@ async def issue(ctx, anliegen, prioritaet: int, *, beschreibung):
     
     await ctx.send(embed=confirmation_embed)
     
-    destination_channel = bot.get_channel(1140576927837605908)  # Ziel-Channel-ID für Anliegen-Embeds
-    issue_message = await destination_channel.send(embed=embed)  # Anliegen-Embed im Ziel-Channel senden
+    destination_channel = bot.get_channel(ZIEL_CHANNEL)  
+    issue_message = await destination_channel.send(embed=embed)  
     
     # Logging der Anliegen in issue.txt
     with open("issue.txt", "a") as file:
@@ -62,7 +62,6 @@ async def issue(ctx, anliegen, prioritaet: int, *, beschreibung):
     # Reaktionen hinzufügen
     await issue_message.add_reaction('✅')
     await issue_message.add_reaction('❌')
-    await issue_message.add_reaction('✏')
 
 @bot.event
 async def on_reaction_add(reaction, user):
@@ -84,10 +83,6 @@ async def on_reaction_add(reaction, user):
         new_channel = bot.get_channel(1147845331950764062)
         await reaction.message.delete()
         await new_channel.send(embed=reaction.message.embeds[0])
-
-    elif reaction.emoji == '✏':
-        # Embed in diesem Channel anpinnen
-        await reaction.message.pin()
 
     
 TOKEN = 'BOT_TOKEN'  # Hier den Token deines Bots einfügen
