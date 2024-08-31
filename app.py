@@ -58,23 +58,19 @@ async def on_reaction_add(reaction, user):
     if user.bot:
         return
     
-    # Überprüfen, ob die Reaktion auf das Anliegen-Embed in dem richtigen Ziel-Channel ist
-    if reaction.message.channel.id != 1140576927837605908:
-        return
-    
-    try:
-        # Hier wird eine Timeout-Zeit von 60 Sekunden festgelegt
-        reaction, user = await bot.wait_for('reaction_add', timeout=604800)
-        
-        if reaction.emoji == '✅':
-            # Embed löschen und in den neuen Channel senden
-            new_channel = bot.get_channel(ISSUE_LOG)
+    # Überprüfen, ob die Reaktion im Ziel-Channel stattfindet und das Emoji das erwartete ist
+    if reaction.message.channel.id == ISSUE_CHANNEL and reaction.emoji == '✅':
+        try:
+            # Hole den neuen Channel, in den die Nachricht verschoben werden soll
+            new_channel = bot.get_channel(ISSUE_LOG_CHANNEL)
+            
+            # Lösche die alte Nachricht und sende das Embed in den neuen Channel
             await reaction.message.delete()
             await new_channel.send(embed=reaction.message.embeds[0])
-    
-    except asyncio.TimeoutError:
-        # Aktion, die ausgeführt wird, wenn das Timeout erreicht wurde
-        print("Timeout erreicht. Bot hört auf, auf Reaktionen zu warten.")
+        
+        except Exception as e:
+            # Fehlerbehandlung (optional)
+            print(f"Fehler beim Verschieben der Nachricht: {e}")
 
 @bot.command()
 async def sc_help(ctx):
