@@ -103,8 +103,12 @@ async def sc_channel(ctx, channel_id: int):
         await ctx.send("Ungültige Kanal-ID.")
 
 @bot.command()
-@commands.has_permissions(administrator=True)
 async def kooperation_news(ctx, *, nachricht):
+    # Überprüfen, ob der Befehl von der gewünschten Benutzer-ID stammt
+    if ctx.author.id != AUTHOR_ID:
+        await ctx.send("Du bist nicht berechtigt, diesen Befehl zu nutzen.")
+        return
+
     if not news_channel_list:
         await ctx.send("Es gibt keine Kanäle in der News-Channel-Liste.")
         return
