@@ -37,10 +37,10 @@ async def issue(ctx, *, beschreibung):
     
     await ctx.send(embed=confirmation_embed)
     
-    destination_channel = bot.get_channel(ISSUE_CHANNEL)  # Ziel-Channel-ID für Anliegen-Embeds
-    issue_message = await destination_channel.send(embed=embed)  # Anliegen-Embed im Ziel-Channel senden
+    destination_channel = bot.get_channel(ISSUE_CHANNEL)  
+    issue_message = await destination_channel.send(embed=embed)  
     
-    # Logging der Anliegen in issue.txt
+  
     with open("issue.txt", "a") as file:
         file.write(f"Issue #{issue_count}\n")
         file.write(f"User: {ctx.author.name}\n")
@@ -50,7 +50,7 @@ async def issue(ctx, *, beschreibung):
         file.write(f"Beschreibung: {beschreibung}\n")
         file.write("----------\n")
     
-    # Reaktionen hinzufügen
+    
     await issue_message.add_reaction('✅')
 
 @bot.event
@@ -58,18 +58,18 @@ async def on_reaction_add(reaction, user):
     if user.bot:
         return
     
-    # Überprüfen, ob die Reaktion im Ziel-Channel stattfindet und das Emoji das erwartete ist
+   
     if reaction.message.channel.id == ISSUE_CHANNEL and reaction.emoji == '✅':
         try:
-            # Hole den neuen Channel, in den die Nachricht verschoben werden soll
+           
             new_channel = bot.get_channel(ISSUE_LOG_CHANNEL)
             
-            # Lösche die alte Nachricht und sende das Embed in den neuen Channel
+            
             await reaction.message.delete()
             await new_channel.send(embed=reaction.message.embeds[0])
         
         except Exception as e:
-            # Fehlerbehandlung (optional)
+          
             print(f"Fehler beim Verschieben der Nachricht: {e}")
 
 @bot.command()
@@ -104,7 +104,7 @@ async def sc_channel(ctx, channel_id: int):
 
 @bot.command()
 async def kooperation_news(ctx, *, nachricht):
-    # Überprüfen, ob der Befehl von der gewünschten Benutzer-ID stammt
+   
     if ctx.author.id != AUTHOR_ID:
         await ctx.send("Du bist nicht berechtigt, diesen Befehl zu nutzen.")
         return
@@ -125,5 +125,5 @@ async def kooperation_news(ctx, *, nachricht):
     
     await ctx.send("Nachricht wurde an alle News-Channels gesendet.")
 
-TOKEN = 'BOT_TOKEN'  # Hier den Token deines Bots einfügen
+TOKEN = 'BOT_TOKEN'
 bot.run(TOKEN)
