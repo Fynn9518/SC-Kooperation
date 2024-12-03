@@ -13,8 +13,8 @@ intents.presences = False
 
 bot = commands.Bot(command_prefix='!', intents=intents)
 
-issue_count = ISSUE_COUNT  # Zähler für Anliegen
-news_channel_list = [CHANNEL_IDs]  # Liste der News-Channels
+issue_count = ISSUE_COUNT  
+news_channel_list = [CHANNEL_IDs] 
 
 @bot.event
 async def on_ready():
