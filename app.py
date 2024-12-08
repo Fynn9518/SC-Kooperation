@@ -158,18 +158,13 @@ async def help_command(interaction: discord.Interaction):
     )
     
     embed.add_field(
-        name="/issue beschreibung:str",
+        name="/issue beschreibung",
         value="Erstellt ein Anliegen mit einer Beschreibung.\n**Benötigt:** Administrator-Rechte.",
         inline=False
     )
     embed.add_field(
-        name="/addchannel channel_id:int",
+        name="/addchannel channel_id",
         value="Fügt einen Kanal zur Liste der News-Channels hinzu.\n**Benötigt:** Administrator-Rechte.",
-        inline=False
-    )
-    embed.add_field(
-        name="/kooperation_news nachricht:str",
-        value="Sendet eine Nachricht an alle in der News-Channel-Liste gespeicherten Kanäle.\n**Benötigt:** Nur der Bot-Besitzer kann diesen Command ausführen.",
         inline=False
     )
     embed.add_field(
